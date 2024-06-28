@@ -1,0 +1,36 @@
+using ScreenSound.Models;
+
+namespace ScreenSound.Menus;
+
+public class MenuExibirDetalhes : Menu
+{
+    public override void Executar(Dictionary<string, Banda> bandasRegistradas)
+    {
+        base.Executar(bandasRegistradas);
+        ExibirTituloDaOpcao("Exibir detalhes da banda");
+        Console.Write("Digite o nome da banda que deseja conhecer melhor: ");
+        string nomeDaBanda = Console.ReadLine()!;
+
+        if (bandasRegistradas.ContainsKey(nomeDaBanda))
+        {
+            Banda banda = bandasRegistradas[nomeDaBanda];
+            Console.WriteLine($"\nA média da banda {nomeDaBanda} é {banda.Media}.");
+            Console.WriteLine("Discografia e músicas");
+            Console.Write("");
+            foreach (Album album in banda.Albuns)
+            {
+                Console.WriteLine($"{album.Nome} -> {album.Media}");
+                album.ExibirMusicasDoAlbum(album.Nome);
+
+                
+            }
+        }
+        else
+        {
+            Console.WriteLine($"\nA banda {nomeDaBanda} não foi encontrada!");
+            Console.WriteLine("Digite uma tecla para voltar ao menu principal");
+            Console.ReadKey();
+            Console.Clear();
+        }
+    }
+}
